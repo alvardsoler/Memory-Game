@@ -11,11 +11,26 @@ var MemoryGame = MemoryGame || {};
 MemoryGame = function(gs) {
     this.maps = gs.maps;
     this.cards = new Array();
+    var i = 0;
+    for (var card in gs.maps) {
+        if (card != "back") {
+            this.cards.push({
+                id: card,
+                pos: i
+            });
+            i++;
+            this.cards.push({
+                id: card,
+                pos: i
+            });
+        }
+    }
+
     this.infoText = "MemoryGame";
     this.numCardsFound = 0;
     this.gs = gs;
 
-    console.log(this);
+    //   console.log(this);
 };
 
 MemoryGame.prototype = {
@@ -23,7 +38,9 @@ MemoryGame.prototype = {
     // Inicializa el juego creando las cartas (2 de cada tipo), desordenándolas y comenzando
     // el bucle del juego.
     initGame: function() {
-        //alert("jugamos");
+        //alert("jugamos");        
+        this.cards = shuffleArray(this.cards);
+        console.log(this);
     },
     // Dibuja el juego
     draw: function() {
@@ -33,8 +50,11 @@ MemoryGame.prototype = {
     },
     // El bucle del juego.
     loop: function() {
+        var self = this;
         // Llamar al método draw cada 16 ms
-        setInterval(draw, 16);
+        setInterval(function() {
+            self.draw()
+        }, 16);
     },
     // Se llama cada vez que se pulsa sobre una carta (identificada por la posición que ocupan
     //	en el array). Voltea la carta, y si hay dos voleteadas, comprobar si son la misma.
@@ -72,3 +92,20 @@ MemoryGame.Card.prototype = {
 
     }
 };
+
+/* Funciones auxiliares */
+
+/**
+ * Fuente: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+ * Randomize array element order in-place.
+ * Using Durstenfeld shuffle algorithm.
+ */
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
