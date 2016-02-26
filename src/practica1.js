@@ -2,6 +2,8 @@
  * MemoryGame es la clase que representa nuestro juego. Contiene un array con la cartas del juego,
  * el número de cartas encontradas (para saber cuándo hemos terminado el juego) y un texto con el mensaje
  * que indica en qué estado se encuentra el juego
+ *
+ * @author: Álvar David Soler Rus
  */
 var MemoryGame = MemoryGame || {};
 
