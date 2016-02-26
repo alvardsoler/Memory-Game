@@ -19,7 +19,7 @@ MemoryGame = function(gs) {
         }
     }
 
-    this.infoText = "MemoryGame";
+    this.infoText = "Memory Game";
     this.numCardsFound = 0;
     this.gs = gs;
     this.wait = false;
@@ -54,7 +54,7 @@ MemoryGame.prototype = {
         setInterval(function() {
             self.draw();
             if (self.numCardsFound === (self.cards.length / 2)) {
-                self.infoText = "Win!";
+                self.infoText = "You Win!";
             }
         }, 16);
 
@@ -75,22 +75,22 @@ MemoryGame.prototype = {
                 this.flippedCards[1].found();
 
                 this.numCardsFound++;
-                this.infoText = "Match!"
+                this.infoText = "Match found!";
                 // Dejamos el array con tamaño 0
                 this.flippedCards = [];
             } else {
                 // Son diferentes, las volteamos
                 var self = this;
                 this.wait = true;
-                this.infoText = "Fail!";
+                self.infoText = "Try again!";
                 setTimeout(function() {
                     self.flippedCards[0].flip();
                     self.flippedCards[1].flip();
                     // Dejamos el array con tamaño 0
                     self.flippedCards = [];
                     self.wait = false;
-                    self.infoText = "Try other!";
-                }, 500);
+
+                }, 1000);
 
             }
 
@@ -130,32 +130,8 @@ MemoryGame.Card = function(id) {
             gs.draw(this.id, pos);
     };
 };
-/*
-MemoryGame.Card.prototype = {
-    // Da la vuelta a la carta, cambiando su estado
-    flip: function() {
-        if (this.state === "back") {
-            this.state = "face";
-        } else {
-            this.state = "back";
-        }
-    },
-    // Marca una carta como encontrada
-    found: function() {
-        this.found = true;
-    },
-    // Compara dos cartas
-    compareTo: function(otherCard) {
-        return (this.id === otherCard.id);
-    },
-    // Dibuja la carta de acuerdo al estado en el que se encuentra la carta
-    draw: function(gs, pos) {
-        if (this.state === "back") {
-            gs.draw("back", pos);
-        } else
-            gs.draw(this.id, pos);
-    }
-};*/
+
+
 
 /* Funciones auxiliares */
 
